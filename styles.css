@@ -1041,8 +1041,8 @@ button {
 
 /* Featured Project Card */
 .project-card.featured {
-    grid-column: span 2;
     background: linear-gradient(135deg, rgba(88, 166, 255, 0.05) 0%, rgba(126, 231, 135, 0.05) 100%);
+    border-color: rgba(88, 166, 255, 0.15);
 }
 
 .featured-badge {
