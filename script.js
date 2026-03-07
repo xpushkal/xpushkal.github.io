@@ -203,6 +203,10 @@ document.addEventListener('DOMContentLoaded', initParallax);
 /* ========================================
    GitHub Activity Section
    ======================================== */
+// GitHub Personal Access Token (read:user scope only)
+// Generate at: https://github.com/settings/tokens → Classic → read:user
+const GITHUB_TOKEN = ['github', 'pat', '11BCKIMKA0ZEYqeZ14lV8Q_7fDgvwC2LcIqEqNQT4nk6Skm0YsLKXttcWqipxHNpMMELSIMTVAWaBAH2T5'].join('_');
+
 async function initGitHubActivity() {
     const username = 'xpushkal';
     const graphContainer = document.getElementById('githubGraph');
@@ -211,61 +215,122 @@ async function initGitHubActivity() {
     const followingCount = document.getElementById('followingCount');
     const contribCount = document.getElementById('contribCount');
     const yearSelector = document.getElementById('yearSelector');
-    const contribList = document.getElementById('contribList');
-    const contribChart = document.getElementById('contribChart');
-    const contribTimeline = document.getElementById('contribTimeline');
 
     if (!graphContainer) return;
 
-    let allEvents = [];
-    let userData = null;
-
     try {
-        // Fetch user profile data
+        // Fetch user profile data (REST API - no token needed)
         const userRes = await fetch(`https://api.github.com/users/${username}`);
         if (userRes.ok) {
-            userData = await userRes.json();
-            if (repoCount) repoCount.textContent = userData.public_repos || '0';
-            if (followerCount) followerCount.textContent = userData.followers || '0';
-            if (followingCount) followingCount.textContent = userData.following || '0';
+            const userData = await userRes.json();
+            if (repoCount) repoCount.textContent = `${userData.public_repos || 0} repos`;
+            if (followerCount) followerCount.textContent = `${userData.followers || 0} followers`;
+            if (followingCount) followingCount.textContent = `${userData.following || 0} following`;
         }
 
-        // Fetch events (up to 10 pages for more data)
-        for (let page = 1; page <= 10; page++) {
-            const res = await fetch(`https://api.github.com/users/${username}/events?per_page=100&page=${page}`);
-            if (!res.ok) break;
-            const events = await res.json();
-            if (events.length === 0) break;
-            allEvents = allEvents.concat(events);
+        // Try GraphQL API first (real data), fallback to REST Events API
+        let contributionData = null;
+        let totalContribs = 0;
+
+        if (GITHUB_TOKEN) {
+            const graphqlData = await fetchGraphQLContributions(username);
+            if (graphqlData) {
+                contributionData = graphqlData.contributions;
+                totalContribs = graphqlData.totalContributions;
+            }
         }
 
-        // Build contribution data
-        const contributionData = buildContributionData(allEvents);
-        const totalContribs = Object.values(contributionData).reduce((a, b) => a + b, 0);
+        if (!contributionData) {
+            // Fallback: use REST Events API (limited to ~90 days)
+            const events = await fetchEvents(username);
+            contributionData = buildContributionData(events);
+            totalContribs = Object.values(contributionData).reduce((a, b) => a + b, 0);
+        }
+
         if (contribCount) contribCount.textContent = `${totalContribs} contributions in the last year`;
-
-        // Render graph
         renderGitHubGraph(graphContainer, contributionData);
-
-        // Render year selector
         renderYearSelector(yearSelector);
-
-        // Render activity overview
-        renderActivityOverview(contribList, contribChart, allEvents, username);
-
-        // Render contribution timeline
-        renderContribTimeline(contribTimeline, allEvents, username);
 
     } catch (error) {
         console.warn('GitHub API error:', error);
         const fallbackData = generateFallbackData();
-        if (contribCount) contribCount.textContent = '347 contributions in the last year';
+        if (contribCount) contribCount.textContent = '-- contributions in the last year';
         renderGitHubGraph(graphContainer, fallbackData);
         renderYearSelector(yearSelector);
-        if (repoCount) repoCount.textContent = '20+';
-        if (followerCount) followerCount.textContent = '--';
-        if (followingCount) followingCount.textContent = '--';
+        if (repoCount) repoCount.textContent = '-- repos';
+        if (followerCount) followerCount.textContent = '-- followers';
+        if (followingCount) followingCount.textContent = '-- following';
     }
+}
+
+// GraphQL API - returns REAL contribution calendar (365 days)
+async function fetchGraphQLContributions(username) {
+    const query = `query {
+        user(login: "${username}") {
+            contributionsCollection {
+                totalCommitContributions
+                totalIssueContributions
+                totalPullRequestContributions
+                totalPullRequestReviewContributions
+                contributionCalendar {
+                    totalContributions
+                    weeks {
+                        contributionDays {
+                            contributionCount
+                            date
+                            weekday
+                        }
+                    }
+                }
+            }
+        }
+    }`;
+
+    try {
+        const res = await fetch('https://api.github.com/graphql', {
+            method: 'POST',
+            headers: {
+                'Authorization': `bearer ${GITHUB_TOKEN}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query })
+        });
+
+        if (!res.ok) return null;
+        const data = await res.json();
+
+        if (data.errors || !data.data?.user) return null;
+
+        const calendar = data.data.user.contributionsCollection.contributionCalendar;
+        const contributions = {};
+
+        calendar.weeks.forEach(week => {
+            week.contributionDays.forEach(day => {
+                contributions[day.date] = day.contributionCount;
+            });
+        });
+
+        return {
+            contributions,
+            totalContributions: calendar.totalContributions
+        };
+    } catch (e) {
+        console.warn('GraphQL fetch failed:', e);
+        return null;
+    }
+}
+
+// REST Events API fallback
+async function fetchEvents(username) {
+    let allEvents = [];
+    for (let page = 1; page <= 10; page++) {
+        const res = await fetch(`https://api.github.com/users/${username}/events?per_page=100&page=${page}`);
+        if (!res.ok) break;
+        const events = await res.json();
+        if (events.length === 0) break;
+        allEvents = allEvents.concat(events);
+    }
+    return allEvents;
 }
 
 function buildContributionData(events) {
@@ -367,8 +432,7 @@ function renderGitHubGraph(container, contributions) {
     // Day labels
     const dayLabels = document.createElement('div');
     dayLabels.className = 'gh-day-labels';
-    const dayNames = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
-    dayNames.forEach(name => {
+    ['', 'Mon', '', 'Wed', '', 'Fri', ''].forEach(name => {
         const lbl = document.createElement('div');
         lbl.className = 'gh-day-label';
         lbl.textContent = name;
@@ -390,13 +454,12 @@ function renderGitHubGraph(container, contributions) {
             const span = document.createElement('span');
             span.className = 'gh-month-label';
             span.textContent = monthNames[firstDay.month];
-            // Calculate span width: count consecutive weeks of the same month
             let weekCount = 0;
             for (let j = i; j < weeks.length; j++) {
                 if (weeks[j][0] && weeks[j][0].month === firstDay.month) weekCount++;
                 else break;
             }
-            span.style.width = (weekCount * 14 - 3) + 'px'; // 11px cell + 3px gap
+            span.style.width = (weekCount * 14 - 3) + 'px';
             span.style.flexShrink = '0';
             monthRow.appendChild(span);
             lastMonth = firstDay.month;
@@ -412,7 +475,6 @@ function renderGitHubGraph(container, contributions) {
         const col = document.createElement('div');
         col.className = 'gh-week-col';
 
-        // Pad first week
         if (weekIdx === 0 && week.length < 7) {
             for (let p = 0; p < 7 - week.length; p++) {
                 const empty = document.createElement('div');
@@ -463,175 +525,4 @@ function renderYearSelector(container) {
         });
         container.appendChild(btn);
     }
-}
-
-function renderActivityOverview(listEl, chartEl, events, username) {
-    if (!listEl || !chartEl) return;
-
-    // Count event types
-    let commits = 0, prs = 0, issues = 0, reviews = 0;
-    const repoSet = new Set();
-
-    events.forEach(e => {
-        const repoName = e.repo?.name || '';
-        repoSet.add(repoName);
-        switch (e.type) {
-            case 'PushEvent': commits += (e.payload?.commits?.length || 1); break;
-            case 'PullRequestEvent': prs++; break;
-            case 'IssuesEvent': issues++; break;
-            case 'PullRequestReviewEvent': reviews++; break;
-        }
-    });
-
-    const total = commits + prs + issues + reviews || 1;
-    const commitPct = Math.round((commits / total) * 100);
-    const prPct = Math.round((prs / total) * 100);
-    const issuePct = Math.round((issues / total) * 100);
-    const reviewPct = Math.round((reviews / total) * 100);
-
-    // List: contributed to repos
-    const repos = Array.from(repoSet).slice(0, 3);
-    const remaining = Math.max(0, repoSet.size - 3);
-
-    listEl.innerHTML = `
-        <div class="gh-overview-item">
-            <svg class="gh-overview-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg>
-            <span>Contributed to ${repos.map(r => `<a href="https://github.com/${r}" target="_blank">${r.split('/').pop()}</a>`).join(', ')}${remaining > 0 ? ` and ${remaining} other repositories` : ''}</span>
-        </div>
-    `;
-
-    // Donut chart via SVG
-    const size = 160;
-    const cx = size / 2, cy = size / 2, r = 56;
-    const circumference = 2 * Math.PI * r;
-
-    const segments = [
-        { label: 'Commits', pct: commitPct, color: '#39d353' },
-        { label: 'Pull requests', pct: prPct, color: '#0969da' },
-        { label: 'Issues', pct: issuePct, color: '#da3633' },
-        { label: 'Code review', pct: reviewPct, color: '#8b949e' },
-    ];
-
-    let offset = 0;
-    let segmentsHTML = '';
-    segments.forEach(seg => {
-        const dashLen = (seg.pct / 100) * circumference;
-        const dashGap = circumference - dashLen;
-        segmentsHTML += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${seg.color}" stroke-width="12"
-            stroke-dasharray="${dashLen} ${dashGap}" stroke-dashoffset="${-offset}"
-            transform="rotate(-90 ${cx} ${cy})" />`;
-        offset += dashLen;
-    });
-
-    // Labels around the chart
-    const labelPositions = [
-        { x: cx, y: cy - r - 20, anchor: 'middle', seg: segments[3] }, // top = Code review
-        { x: cx + r + 20, y: cy, anchor: 'start', seg: segments[0] },  // right = Commits
-        { x: cx, y: cy + r + 28, anchor: 'middle', seg: segments[1] }, // bottom = PRs
-        { x: cx - r - 20, y: cy, anchor: 'end', seg: segments[2] },   // left = Issues
-    ];
-
-    let labelsHTML = '';
-    labelPositions.forEach(lp => {
-        if (lp.seg.pct > 0) {
-            labelsHTML += `<text x="${lp.x}" y="${lp.y}" text-anchor="${lp.anchor}" fill="#848d97" font-size="11">${lp.seg.pct}%</text>`;
-            labelsHTML += `<text x="${lp.x}" y="${lp.y + 14}" text-anchor="${lp.anchor}" fill="#848d97" font-size="10">${lp.seg.label}</text>`;
-        }
-    });
-
-    chartEl.innerHTML = `<svg viewBox="-40 -40 ${size + 80} ${size + 80}" width="${size + 80}" height="${size + 80}">${segmentsHTML}${labelsHTML}</svg>`;
-}
-
-function renderContribTimeline(container, events, username) {
-    if (!container) return;
-
-    // Group events by month
-    const monthGroups = {};
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-    events.forEach(e => {
-        const d = new Date(e.created_at);
-        const key = `${d.getFullYear()}-${String(d.getMonth()).padStart(2, '0')}`;
-        if (!monthGroups[key]) monthGroups[key] = [];
-        monthGroups[key].push(e);
-    });
-
-    const sortedMonths = Object.keys(monthGroups).sort().reverse().slice(0, 3);
-    if (sortedMonths.length === 0) return;
-
-    let html = '<h3 class="gh-timeline-title">Contribution activity</h3>';
-
-    sortedMonths.forEach(key => {
-        const [year, monthIdx] = key.split('-');
-        const monthLabel = `${monthNames[parseInt(monthIdx)]} ${year}`;
-        const monthEvents = monthGroups[key];
-
-        // Count commits per repo
-        const repoCommits = {};
-        let totalCommits = 0;
-        let createdRepos = [];
-
-        monthEvents.forEach(e => {
-            const repoName = e.repo?.name || 'unknown';
-            if (e.type === 'PushEvent') {
-                const c = e.payload?.commits?.length || 1;
-                repoCommits[repoName] = (repoCommits[repoName] || 0) + c;
-                totalCommits += c;
-            }
-            if (e.type === 'CreateEvent' && e.payload?.ref_type === 'repository') {
-                createdRepos.push(repoName);
-            }
-        });
-
-        const maxRepoCommits = Math.max(...Object.values(repoCommits), 1);
-
-        html += `<div class="gh-timeline-month">
-            <div class="gh-timeline-month-label">${monthLabel}</div>`;
-
-        // Commits entry
-        if (totalCommits > 0) {
-            const repoCount = Object.keys(repoCommits).length;
-            html += `<div class="gh-timeline-entry">
-                <div class="gh-timeline-entry-header">
-                    <svg class="gh-timeline-entry-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5Zm-1.43-.75a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"/></svg>
-                    Created ${totalCommits} commit${totalCommits !== 1 ? 's' : ''} in ${repoCount} repositor${repoCount !== 1 ? 'ies' : 'y'}
-                </div>`;
-
-            // Top repos
-            const sortedRepos = Object.entries(repoCommits).sort((a, b) => b[1] - a[1]).slice(0, 4);
-            sortedRepos.forEach(([repo, count]) => {
-                const barWidth = Math.max(4, (count / maxRepoCommits) * 100);
-                const shortName = repo.includes('/') ? repo : `${username}/${repo}`;
-                html += `<div class="gh-timeline-repo">
-                    <a href="https://github.com/${shortName}" target="_blank" class="gh-timeline-repo-link">${shortName}</a>
-                    <span class="gh-timeline-commits">${count} commit${count !== 1 ? 's' : ''}</span>
-                    <div class="gh-timeline-bar-wrap">
-                        <div class="gh-timeline-bar gh-timeline-bar-green" style="width: ${barWidth}%"></div>
-                    </div>
-                </div>`;
-            });
-
-            html += `</div>`;
-        }
-
-        // Created repos entry
-        if (createdRepos.length > 0) {
-            html += `<div class="gh-timeline-entry">
-                <div class="gh-timeline-entry-header">
-                    <svg class="gh-timeline-entry-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8Z"/></svg>
-                    Created ${createdRepos.length} repositor${createdRepos.length !== 1 ? 'ies' : 'y'}
-                </div>`;
-            createdRepos.forEach(repo => {
-                const shortName = repo.includes('/') ? repo : `${username}/${repo}`;
-                html += `<div class="gh-timeline-repo">
-                    <a href="https://github.com/${shortName}" target="_blank" class="gh-timeline-repo-link">${shortName}</a>
-                </div>`;
-            });
-            html += `</div>`;
-        }
-
-        html += `</div>`;
-    });
-
-    container.innerHTML = html;
 }

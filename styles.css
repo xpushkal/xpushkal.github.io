@@ -1105,56 +1105,7 @@ button {
 .github-activity-content {
     display: flex;
     flex-direction: column;
-    gap: var(--space-8);
-}
-
-.github-profile-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: var(--space-6);
-}
-
-.github-profile-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
-    color: var(--accent-primary);
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-    transition: all var(--transition-fast);
-}
-
-.github-profile-link:hover {
-    color: var(--accent-secondary);
-    transform: translateX(4px);
-}
-
-.github-stats {
-    display: flex;
-    gap: var(--space-8);
-}
-
-.github-stat {
-    text-align: center;
-}
-
-.github-stat-number {
-    display: block;
-    font-size: var(--font-size-2xl);
-    font-weight: 800;
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.github-stat-label {
-    font-size: var(--font-size-xs);
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    gap: 0;
 }
 
 /* Contribution Card - GitHub style */
@@ -1166,7 +1117,44 @@ button {
 }
 
 .gh-contrib-header {
-    padding: 16px 16px 0;
+    padding: 16px 16px 8px;
+}
+
+.gh-profile-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.github-profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-primary);
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.15s;
+}
+
+.github-profile-link:hover {
+    color: var(--accent-secondary);
+}
+
+.gh-header-stats {
+    display: flex;
+    gap: 8px;
+}
+
+.gh-stat-pill {
+    font-size: 12px;
+    color: #848d97;
+    background: #161b22;
+    border: 1px solid #30363d;
+    padding: 3px 10px;
+    border-radius: 12px;
 }
 
 .gh-contrib-count {
@@ -1423,204 +1411,6 @@ button {
     background: #39d353;
 }
 
-/* Activity Overview */
-.gh-activity-overview {
-    margin-top: 0;
-}
-
-.gh-overview-card {
-    padding: 0;
-}
-
-.gh-overview-title {
-    padding: 16px;
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--text-primary);
-    margin: 0;
-    border-bottom: 1px solid #30363d;
-}
-
-.gh-overview-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 220px;
-}
-
-.gh-overview-list {
-    padding: 16px 24px;
-    border-right: 1px solid #30363d;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 8px;
-}
-
-.gh-overview-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    color: #848d97;
-}
-
-.gh-overview-item a {
-    color: var(--accent-primary);
-    font-size: 13px;
-}
-
-.gh-overview-item a:hover {
-    text-decoration: underline;
-}
-
-.gh-overview-icon {
-    width: 18px;
-    height: 18px;
-    color: #848d97;
-    flex-shrink: 0;
-}
-
-.gh-overview-chart {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    position: relative;
-}
-
-/* Contribution Timeline */
-.gh-timeline {
-    margin-top: 16px;
-}
-
-.gh-timeline-title {
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--text-primary);
-    margin-bottom: 16px;
-}
-
-.gh-timeline-month {
-    position: relative;
-    padding-left: 24px;
-    padding-bottom: 24px;
-    border-left: 2px solid #30363d;
-    margin-left: 8px;
-}
-
-.gh-timeline-month:last-child {
-    border-left-color: transparent;
-}
-
-.gh-timeline-month-label {
-    position: relative;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #30363d;
-}
-
-.gh-timeline-month-label::before {
-    content: '';
-    position: absolute;
-    left: -29px;
-    top: 6px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #30363d;
-    border: 2px solid #0d1117;
-}
-
-.gh-timeline-entry {
-    background: #0d1117;
-    border: 1px solid #30363d;
-    border-radius: 6px;
-    padding: 16px;
-    margin-bottom: 12px;
-}
-
-.gh-timeline-entry-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    font-size: 14px;
-    color: var(--text-primary);
-    font-weight: 400;
-}
-
-.gh-timeline-entry-icon {
-    width: 18px;
-    height: 18px;
-    color: #848d97;
-    flex-shrink: 0;
-}
-
-.gh-timeline-repo {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 4px 0;
-    gap: 12px;
-}
-
-.gh-timeline-repo-link {
-    color: var(--accent-primary);
-    font-size: 13px;
-    flex-shrink: 0;
-}
-
-.gh-timeline-repo-link:hover {
-    text-decoration: underline;
-}
-
-.gh-timeline-commits {
-    font-size: 12px;
-    color: #848d97;
-    margin-right: 8px;
-    white-space: nowrap;
-}
-
-.gh-timeline-bar-wrap {
-    flex: 1;
-    max-width: 200px;
-    height: 10px;
-    background: #161b22;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.gh-timeline-bar {
-    height: 100%;
-    border-radius: 5px;
-    min-width: 4px;
-}
-
-.gh-timeline-bar-green {
-    background: #39d353;
-}
-
-.gh-timeline-date {
-    font-size: 12px;
-    color: #848d97;
-}
-
-.gh-timeline-repo-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.gh-timeline-lang-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
 /* Loading */
 .github-graph-loading {
     display: flex;
@@ -1650,13 +1440,13 @@ button {
 
 /* Mobile responsive */
 @media (max-width: 768px) {
-    .github-profile-header {
+    .gh-profile-row {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .github-stats {
-        gap: var(--space-6);
+    .gh-header-stats {
+        flex-wrap: wrap;
     }
 
     .gh-contrib-body {
@@ -1669,15 +1459,6 @@ button {
         border-top: 1px solid #30363d;
         overflow-x: auto;
         min-width: unset;
-    }
-
-    .gh-overview-body {
-        grid-template-columns: 1fr;
-    }
-
-    .gh-overview-list {
-        border-right: none;
-        border-bottom: 1px solid #30363d;
     }
 
     .gh-day {
