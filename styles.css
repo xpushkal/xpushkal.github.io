@@ -1114,6 +1114,9 @@ button {
     border: 1px solid #30363d;
     border-radius: 6px;
     overflow: hidden;
+    max-width: max-content;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .gh-contrib-header {
