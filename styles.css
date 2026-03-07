@@ -304,7 +304,10 @@ button {
     color: var(--accent-secondary);
     margin-bottom: var(--space-4);
     opacity: 0;
-    animation: fadeInUp 0.8s ease forwards;
+    animation: fadeInUp 0.8s ease 0s forwards;
+    -webkit-animation: fadeInUp 0.8s ease 0s forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
     letter-spacing: 2px;
     text-transform: uppercase;
 }
@@ -316,6 +319,9 @@ button {
     margin-bottom: var(--space-4);
     opacity: 0;
     animation: fadeInUp 0.8s ease 0.15s forwards;
+    -webkit-animation: fadeInUp 0.8s ease 0.15s forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .gradient-text {
@@ -332,6 +338,9 @@ button {
     margin-bottom: var(--space-4);
     opacity: 0;
     animation: fadeInUp 0.8s ease 0.3s forwards;
+    -webkit-animation: fadeInUp 0.8s ease 0.3s forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .hero-description {
@@ -341,6 +350,9 @@ button {
     margin: 0 auto var(--space-8);
     opacity: 0;
     animation: fadeInUp 0.8s ease 0.45s forwards;
+    -webkit-animation: fadeInUp 0.8s ease 0.45s forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .hero-cta {
@@ -351,6 +363,9 @@ button {
     margin-bottom: var(--space-10);
     opacity: 0;
     animation: fadeInUp 0.8s ease 0.6s forwards;
+    -webkit-animation: fadeInUp 0.8s ease 0.6s forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .btn {
@@ -392,6 +407,9 @@ button {
     justify-content: center;
     opacity: 0;
     animation: fadeInUp 0.8s ease 0.75s forwards;
+    -webkit-animation: fadeInUp 0.8s ease 0.75s forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .social-link {
@@ -427,6 +445,9 @@ button {
     font-size: var(--font-size-xs);
     opacity: 0;
     animation: fadeInUp 0.8s ease 0.9s forwards;
+    -webkit-animation: fadeInUp 0.8s ease 0.9s forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
 }
 
 .mouse {
@@ -458,6 +479,18 @@ button {
     100% {
         opacity: 0;
         transform: translateX(-50%) translateY(12px);
+    }
+}
+
+@-webkit-keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -1017,6 +1050,10 @@ button {
     background: #DA5B0B;
 }
 
+.language-dot.rust {
+    background: #dea584;
+}
+
 .project-stars {
     display: flex;
     align-items: center;
@@ -1057,6 +1094,598 @@ button {
     font-weight: 600;
     margin-bottom: var(--space-3);
 }
+
+/* ========================================
+   GitHub Activity Section
+   ======================================== */
+.github-activity {
+    background: var(--bg-secondary);
+}
+
+.github-activity-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+.github-profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+}
+
+.github-profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--accent-primary);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.github-profile-link:hover {
+    color: var(--accent-secondary);
+    transform: translateX(4px);
+}
+
+.github-stats {
+    display: flex;
+    gap: var(--space-8);
+}
+
+.github-stat {
+    text-align: center;
+}
+
+.github-stat-number {
+    display: block;
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.github-stat-label {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Contribution Card - GitHub style */
+.gh-contrib-card {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.gh-contrib-header {
+    padding: 16px 16px 0;
+}
+
+.gh-contrib-count {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.gh-contrib-body {
+    display: flex;
+    gap: 0;
+}
+
+.gh-contrib-graph-area {
+    flex: 1;
+    padding: 8px 16px 16px;
+    overflow: hidden;
+}
+
+.gh-graph-scroll {
+    overflow-x: auto;
+    padding-bottom: 4px;
+    min-height: 128px;
+}
+
+.gh-graph-scroll::-webkit-scrollbar {
+    height: 5px;
+}
+
+.gh-graph-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.gh-graph-scroll::-webkit-scrollbar-thumb {
+    background: #30363d;
+    border-radius: 3px;
+}
+
+/* Day labels column */
+.gh-day-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-right: 6px;
+    padding-top: 20px;
+    /* align with grid below month labels */
+    flex-shrink: 0;
+}
+
+.gh-day-label {
+    height: 11px;
+    margin-bottom: 2px;
+    font-size: 10px;
+    line-height: 11px;
+    color: #848d97;
+    text-align: right;
+    min-width: 28px;
+}
+
+/* Contribution grid table */
+.gh-graph-table {
+    display: flex;
+    width: max-content;
+}
+
+.gh-graph-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.gh-month-row {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 4px;
+    height: 15px;
+    align-items: flex-end;
+}
+
+.gh-month-label {
+    font-size: 10px;
+    color: #848d97;
+    line-height: 1;
+}
+
+.gh-weeks-row {
+    display: flex;
+    gap: 3px;
+}
+
+.gh-week-col {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.gh-day {
+    width: 11px;
+    height: 11px;
+    border-radius: 2px;
+    background: #161b22;
+    outline: 1px solid rgba(27, 31, 35, 0.06);
+    position: relative;
+    cursor: pointer;
+}
+
+.gh-day:hover {
+    outline: 2px solid #848d97;
+    outline-offset: -1px;
+}
+
+.gh-day[data-level="1"] {
+    background: #0e4429;
+}
+
+.gh-day[data-level="2"] {
+    background: #006d32;
+}
+
+.gh-day[data-level="3"] {
+    background: #26a641;
+}
+
+.gh-day[data-level="4"] {
+    background: #39d353;
+}
+
+/* Tooltip */
+.gh-tooltip {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1b1f23;
+    border: 1px solid #30363d;
+    color: #e6edf3;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 100;
+    transition: opacity 0.15s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.gh-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #30363d;
+}
+
+.gh-day:hover .gh-tooltip {
+    opacity: 1;
+}
+
+/* Year selector */
+.gh-year-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-left: 1px solid #30363d;
+    padding: 8px 0;
+    min-width: 68px;
+}
+
+.gh-year-btn {
+    padding: 6px 16px;
+    font-size: 12px;
+    color: #848d97;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: right;
+    font-family: inherit;
+    border-radius: 0;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.gh-year-btn:hover {
+    color: var(--text-primary);
+}
+
+.gh-year-btn.active {
+    background: #0969da;
+    color: #fff;
+    border-radius: 4px;
+    margin: 0 4px;
+    padding: 6px 12px;
+    font-weight: 600;
+}
+
+/* Footer */
+.gh-contrib-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.gh-learn-link {
+    font-size: 12px;
+    color: #848d97;
+    transition: color 0.15s;
+}
+
+.gh-learn-link:hover {
+    color: var(--accent-primary);
+}
+
+.gh-legend {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.gh-legend-label {
+    font-size: 11px;
+    color: #848d97;
+}
+
+.gh-legend-cell {
+    width: 11px;
+    height: 11px;
+    border-radius: 2px;
+    outline: 1px solid rgba(27, 31, 35, 0.06);
+}
+
+.gh-legend-cell[data-level="0"] {
+    background: #161b22;
+}
+
+.gh-legend-cell[data-level="1"] {
+    background: #0e4429;
+}
+
+.gh-legend-cell[data-level="2"] {
+    background: #006d32;
+}
+
+.gh-legend-cell[data-level="3"] {
+    background: #26a641;
+}
+
+.gh-legend-cell[data-level="4"] {
+    background: #39d353;
+}
+
+/* Activity Overview */
+.gh-activity-overview {
+    margin-top: 0;
+}
+
+.gh-overview-card {
+    padding: 0;
+}
+
+.gh-overview-title {
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin: 0;
+    border-bottom: 1px solid #30363d;
+}
+
+.gh-overview-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 220px;
+}
+
+.gh-overview-list {
+    padding: 16px 24px;
+    border-right: 1px solid #30363d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+}
+
+.gh-overview-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #848d97;
+}
+
+.gh-overview-item a {
+    color: var(--accent-primary);
+    font-size: 13px;
+}
+
+.gh-overview-item a:hover {
+    text-decoration: underline;
+}
+
+.gh-overview-icon {
+    width: 18px;
+    height: 18px;
+    color: #848d97;
+    flex-shrink: 0;
+}
+
+.gh-overview-chart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    position: relative;
+}
+
+/* Contribution Timeline */
+.gh-timeline {
+    margin-top: 16px;
+}
+
+.gh-timeline-title {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.gh-timeline-month {
+    position: relative;
+    padding-left: 24px;
+    padding-bottom: 24px;
+    border-left: 2px solid #30363d;
+    margin-left: 8px;
+}
+
+.gh-timeline-month:last-child {
+    border-left-color: transparent;
+}
+
+.gh-timeline-month-label {
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #30363d;
+}
+
+.gh-timeline-month-label::before {
+    content: '';
+    position: absolute;
+    left: -29px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #30363d;
+    border: 2px solid #0d1117;
+}
+
+.gh-timeline-entry {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.gh-timeline-entry-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 400;
+}
+
+.gh-timeline-entry-icon {
+    width: 18px;
+    height: 18px;
+    color: #848d97;
+    flex-shrink: 0;
+}
+
+.gh-timeline-repo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 0;
+    gap: 12px;
+}
+
+.gh-timeline-repo-link {
+    color: var(--accent-primary);
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.gh-timeline-repo-link:hover {
+    text-decoration: underline;
+}
+
+.gh-timeline-commits {
+    font-size: 12px;
+    color: #848d97;
+    margin-right: 8px;
+    white-space: nowrap;
+}
+
+.gh-timeline-bar-wrap {
+    flex: 1;
+    max-width: 200px;
+    height: 10px;
+    background: #161b22;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.gh-timeline-bar {
+    height: 100%;
+    border-radius: 5px;
+    min-width: 4px;
+}
+
+.gh-timeline-bar-green {
+    background: #39d353;
+}
+
+.gh-timeline-date {
+    font-size: 12px;
+    color: #848d97;
+}
+
+.gh-timeline-repo-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.gh-timeline-lang-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Loading */
+.github-graph-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    padding: 40px;
+    color: #848d97;
+    font-size: 13px;
+}
+
+.loading-spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid #30363d;
+    border-top-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .github-profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .github-stats {
+        gap: var(--space-6);
+    }
+
+    .gh-contrib-body {
+        flex-direction: column;
+    }
+
+    .gh-year-selector {
+        flex-direction: row;
+        border-left: none;
+        border-top: 1px solid #30363d;
+        overflow-x: auto;
+        min-width: unset;
+    }
+
+    .gh-overview-body {
+        grid-template-columns: 1fr;
+    }
+
+    .gh-overview-list {
+        border-right: none;
+        border-bottom: 1px solid #30363d;
+    }
+
+    .gh-day {
+        width: 9px;
+        height: 9px;
+    }
+}
+
 
 /* ========================================
    Education Section
