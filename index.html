@@ -5,11 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Pushkal Pratap Singh - AIML Developer specializing in AI/ML. View my projects, experience, and skills.">
+        content="Pushkal Pratap Singh - AI/ML & Backend Engineer building LLM gateways, RAG pipelines, and ML microservices. Smart India Hackathon 2025 National Finalist & AI For Bharat 2nd Runner-Up.">
     <meta name="keywords"
-        content="Pushkal Pratap Singh, AIML Developer, Machine Learning, NLP, Data Science, Portfolio">
+        content="Pushkal Pratap Singh, AI/ML Engineer, Backend Engineer, LLM Gateway, RAG Pipelines, FastAPI, LangChain, Machine Learning, Portfolio">
     <meta name="author" content="Pushkal Pratap Singh">
-    <title>Pushkal Pratap Singh | AIML Developer</title>
+    <meta name="theme-color" content="#0d1117">
+    <title>Pushkal Pratap Singh | AI/ML & Backend Engineer</title>
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Pushkal Pratap Singh | AI/ML & Backend Engineer">
+    <meta property="og:description"
+        content="Building LLM gateways, RAG pipelines, and ML microservices with Python, LangChain, FastAPI, and vector databases.">
+    <meta property="og:url" content="https://pushkal.me">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -19,6 +28,11 @@
 </head>
 
 <body>
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <!-- Cursor spotlight glow -->
+    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -48,19 +62,28 @@
         <div class="hero-bg">
             <div class="hero-image"></div>
             <div class="hero-overlay"></div>
+            <div class="aurora">
+                <span class="aurora-blob aurora-1"></span>
+                <span class="aurora-blob aurora-2"></span>
+                <span class="aurora-blob aurora-3"></span>
+            </div>
+            <div class="hero-grid"></div>
             <div class="hero-particles"></div>
         </div>
         <div class="hero-content">
-            <p class="hero-greeting">Welcome I'm</p>
+            <p class="hero-greeting"><span class="hero-status-dot"></span> Available for opportunities</p>
             <h1 class="hero-title">
                 <span class="gradient-text">Pushkal Pratap Singh</span>
             </h1>
-            <p class="hero-subtitle">AIML Developer & Data Science Enthusiast</p>
+            <p class="hero-subtitle">
+                <span class="hero-role" id="heroRole">AI/ML &amp; Backend Engineer</span><span class="hero-caret">|</span>
+            </p>
             <p class="hero-description">
-                Building innovative tech solutions at the intersection of AI/ML
+                I build LLM gateways, RAG pipelines, and ML microservices with Python, LangChain,
+                FastAPI, and vector databases — shipping intelligent systems from research to production.
             </p>
             <div class="hero-cta">
-                <a href="#projects" class="btn btn-secondary">View My Work</a>
+                <a href="#projects" class="btn btn-primary">View My Work</a>
                 <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Resume</a>
                 <a href="#contact" class="btn btn-secondary">Get In Touch</a>
             </div>
@@ -122,8 +145,8 @@
                     <span class="tech-name">FastAPI</span>
                 </div>
                 <div class="tech-item">
-                    <span class="tech-icon">🔮</span>
-                    <span class="tech-name">TensorFlow</span>
+                    <span class="tech-icon">⚡</span>
+                    <span class="tech-name">Redis</span>
                 </div>
                 <div class="tech-item">
                     <span class="tech-icon">🤖</span>
@@ -142,8 +165,8 @@
                     <span class="tech-name">Docker</span>
                 </div>
                 <div class="tech-item">
-                    <span class="tech-icon">☸️</span>
-                    <span class="tech-name">Kubernetes</span>
+                    <span class="tech-icon">📊</span>
+                    <span class="tech-name">Prometheus</span>
                 </div>
                 <div class="tech-item">
                     <span class="tech-icon">☁️</span>
@@ -179,8 +202,8 @@
                     <span class="tech-name">FastAPI</span>
                 </div>
                 <div class="tech-item">
-                    <span class="tech-icon">🔮</span>
-                    <span class="tech-name">TensorFlow</span>
+                    <span class="tech-icon">⚡</span>
+                    <span class="tech-name">Redis</span>
                 </div>
                 <div class="tech-item">
                     <span class="tech-icon">🤖</span>
@@ -199,8 +222,8 @@
                     <span class="tech-name">Docker</span>
                 </div>
                 <div class="tech-item">
-                    <span class="tech-icon">☸️</span>
-                    <span class="tech-name">Kubernetes</span>
+                    <span class="tech-icon">📊</span>
+                    <span class="tech-name">Prometheus</span>
                 </div>
                 <div class="tech-item">
                     <span class="tech-icon">☁️</span>
@@ -239,35 +262,44 @@
             <div class="about-content">
                 <div class="about-text">
                     <p class="about-intro">
-                        A tech geek passionate about <span class="highlight">AI/ML</span>, <span class="highlight">data
-                            science</span>, and <span class="highlight">building intelligent systems</span>.
+                        I'm an <span class="highlight">AI/ML &amp; Backend Engineer</span> who loves shipping
+                        <span class="highlight">LLM gateways</span>, <span class="highlight">RAG pipelines</span>, and
+                        production-grade <span class="highlight">ML microservices</span>.
                     </p>
                     <p>
-                        I love building innovative tech solutions that drive real-world impact. With experience in
-                        research, startups, and community leadership, I'm constantly exploring ways to merge technology
-                        with problem-solving.
+                        My work lives at the intersection of applied machine learning and solid backend engineering —
+                        fine-tuning transformer models, architecting OpenAI-compatible gateways with intent-aware
+                        routing, and orchestrating observable, containerized services with FastAPI, Postgres, Redis,
+                        and vector databases.
                     </p>
                     <p>
-                        Currently pursuing my B.Tech in Computer Science at SRM Institute of Science and Technology, I'm
-                        focused on developing intelligent systems and scalable applications that make a difference.
+                        I'm pursuing my B.Tech in Computer Science at SRM Institute of Science and Technology (Sem 1–6
+                        CGPA 9.06). Recently a <span class="highlight">Smart India Hackathon 2025 National Finalist</span>
+                        and <span class="highlight">AI For Bharat (AWS) 2nd Runner-Up</span>.
                     </p>
                     <div class="about-stats">
                         <div class="stat">
-                            <span class="stat-number">8.9</span>
+                            <span class="stat-number" data-count="9.06" data-decimals="2">9.06</span>
                             <span class="stat-label">CGPA</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number">20+</span>
-                            <span class="stat-label">Projects</span>
+                            <span class="stat-number" data-count="35" data-suffix="+">35+</span>
+                            <span class="stat-label">Repositories</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number">2+</span>
+                            <span class="stat-number" data-count="2" data-suffix="+">2+</span>
                             <span class="stat-label">Internships</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-count="7" data-suffix="">7</span>
+                            <span class="stat-label">Models Fine-tuned</span>
                         </div>
                     </div>
                     <div class="about-cta" style="margin-top: var(--space-8);">
                         <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                 <polyline points="7 10 12 15 17 10"></polyline>
                                 <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -320,37 +352,58 @@
                     <div class="skill-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="16 18 22 12 16 6" />
-                            <polyline points="8 6 2 12 8 18" />
+                            <path
+                                d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z" />
+                            <circle cx="12" cy="14" r="2" />
                         </svg>
                     </div>
-                    <h3>Languages & Frameworks</h3>
+                    <h3>ML / AI</h3>
                     <div class="skill-tags">
-                        <span>C++</span>
-                        <span>Python</span>
-                        <span>FastAPI</span>
-                        <span>Scikit-learn</span>
-                        <span>PostgreSQL</span>
-                        <span>MongoDB</span>
+                        <span>LangChain</span>
+                        <span>RAG Pipelines</span>
+                        <span>Fine-tuning</span>
+                        <span>Hugging Face</span>
+                        <span>PyTorch</span>
+                        <span>spaCy</span>
+                        <span>LLM Gateways</span>
+                        <span>Prompt Engineering</span>
                     </div>
                 </div>
                 <div class="skill-category glass-card">
                     <div class="skill-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z" />
-                            <circle cx="12" cy="14" r="2" />
+                            <ellipse cx="12" cy="5" rx="9" ry="3" />
+                            <path d="M3 5v14a9 3 0 0 0 18 0V5" />
+                            <path d="M3 12a9 3 0 0 0 18 0" />
                         </svg>
                     </div>
-                    <h3>AI/ML & Data</h3>
+                    <h3>Vector Stores</h3>
                     <div class="skill-tags">
-                        <span>Machine Learning</span>
-                        <span>NLP Pipelines</span>
-                        <span>RAG Pipelines</span>
-                        <span>Agentic AI</span>
-                        <span>Transformers</span>
                         <span>Pinecone</span>
+                        <span>FAISS</span>
+                        <span>Chroma</span>
+                        <span>pgvector</span>
+                    </div>
+                </div>
+                <div class="skill-category glass-card">
+                    <div class="skill-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                        </svg>
+                    </div>
+                    <h3>Backend & Languages</h3>
+                    <div class="skill-tags">
+                        <span>Python</span>
+                        <span>SQL</span>
+                        <span>FastAPI</span>
+                        <span>Pydantic</span>
+                        <span>REST APIs</span>
+                        <span>PostgreSQL</span>
+                        <span>Redis</span>
+                        <span>MongoDB</span>
                     </div>
                 </div>
                 <div class="skill-category glass-card">
@@ -362,13 +415,30 @@
                     </div>
                     <h3>Cloud & DevOps</h3>
                     <div class="skill-tags">
-                        <span>AWS</span>
+                        <span>AWS Lambda</span>
+                        <span>API Gateway</span>
+                        <span>DynamoDB</span>
+                        <span>SAM</span>
                         <span>Azure</span>
                         <span>Docker</span>
-                        <span>Kubernetes</span>
+                        <span>Docker Compose</span>
                         <span>CI/CD</span>
-                        <span>Vercel</span>
-                        <span>Cloudflare</span>
+                    </div>
+                </div>
+                <div class="skill-category glass-card">
+                    <div class="skill-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 3v18h18" />
+                            <path d="m19 9-5 5-4-4-3 3" />
+                        </svg>
+                    </div>
+                    <h3>Observability</h3>
+                    <div class="skill-tags">
+                        <span>OpenTelemetry</span>
+                        <span>Prometheus</span>
+                        <span>Grafana</span>
+                        <span>Kafka</span>
                     </div>
                 </div>
             </div>
@@ -384,23 +454,26 @@
             <div class="timeline">
                 <div class="timeline-item glass-card">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-date">Dec 2025 - Present</div>
+                    <div class="timeline-date">Dec 2025 - May 2026</div>
                     <h3 class="timeline-title">Backend Developer Intern</h3>
-                    <h4 class="timeline-company">Tranquiex</h4>
+                    <h4 class="timeline-company">Tranquiex · Remote</h4>
                     <ul class="timeline-details">
-                        <li>Built backend APIs and managed databases for reliable application functionality</li>
-                        <li>Collaborated with frontend teams to implement features and resolve bugs</li>
+                        <li>Developed and maintained REST API endpoints and database schemas supporting core product
+                            functionality in production</li>
+                        <li>Partnered with frontend engineers on feature delivery, bug triage, and code review across
+                            sprint cycles</li>
                     </ul>
                 </div>
                 <div class="timeline-item glass-card">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-date">Jan 2025 - Present</div>
-                    <h3 class="timeline-title">AIML Developer & Model Tester</h3>
-                    <h4 class="timeline-company">Outlier AI</h4>
+                    <div class="timeline-date">Jan 2025 - Dec 2025</div>
+                    <h3 class="timeline-title">AI Training Contractor</h3>
+                    <h4 class="timeline-company">Outlier AI · Remote</h4>
                     <ul class="timeline-details">
-                        <li>Developed, tested, and validated AI/ML models to ensure accuracy, efficiency, and
-                            reliability</li>
-                        <li>Conducted model evaluation, prompt optimization, and dataset quality checks</li>
+                        <li>Evaluated LLM outputs across coding, reasoning, and math domains; authored prompt-response
+                            pairs and rubric-based assessments to improve model alignment</li>
+                        <li>Performed prompt optimization and dataset quality audits, flagging hallucinations and
+                            ambiguous specifications across hundreds of task batches</li>
                     </ul>
                 </div>
                 <div class="timeline-item glass-card">
@@ -427,7 +500,7 @@
             </h2>
             <div class="projects-header">
                 <div class="projects-count">
-                    <span>20+</span> Projects Built
+                    <span>35+</span> Repositories on GitHub
                 </div>
                 <a href="https://github.com/xpushkal?tab=repositories" target="_blank" rel="noopener"
                     class="github-link">
@@ -441,9 +514,59 @@
                 </a>
             </div>
             <div class="projects-grid">
-                <!-- Zit - Featured Project -->
+                <!-- PIL - Flagship Project -->
                 <article class="project-card glass-card featured">
-                    <span class="featured-badge">🔧 Developer Tool</span>
+                    <span class="featured-badge">⭐ Flagship</span>
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M4 11a9 9 0 0 1 9 9" />
+                                <path d="M4 4a16 16 0 0 1 16 16" />
+                                <circle cx="5" cy="19" r="1" />
+                            </svg>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/xpushkal/Prompt-Intelligence-Layer" target="_blank"
+                                rel="noopener" aria-label="GitHub">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                                    <path d="M9 18c-4.51 2-5-2-7-2" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Prompt Intelligence Layer (PIL)</h3>
+                    <p class="project-description">
+                        An opinionated, OpenAI-compatible LLM gateway with intent-aware routing across OpenAI, Anthropic,
+                        Gemini, and local Ollama behind a unified <code>/v1/chat/completions</code> API. Features a
+                        semantic cache (Redis + pgvector), per-key budgets, circuit breakers, PII masking with reversible
+                        de-tokenization, provider fallback chains, and end-to-end OpenTelemetry tracing with shadow-mode
+                        replay for safe rollouts.
+                    </p>
+                    <div class="project-tech">
+                        <span>FastAPI</span>
+                        <span>Postgres + pgvector</span>
+                        <span>Redis</span>
+                        <span>OpenTelemetry</span>
+                        <span>Presidio</span>
+                        <span>LLM Gateway</span>
+                    </div>
+                    <div class="project-meta">
+                        <div class="project-language">
+                            <span class="language-dot python"></span>
+                            Python
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ZIT - Featured Project -->
+                <article class="project-card glass-card featured">
+                    <span class="featured-badge">🔧 Serverless AI</span>
                     <div class="project-header">
                         <div class="project-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
@@ -466,77 +589,20 @@
                             </a>
                         </div>
                     </div>
-                    <h3 class="project-title">Zit</h3>
+                    <h3 class="project-title">ZIT — Git Workflow Automation</h3>
                     <p class="project-description">
-                        AI-powered, terminal-based Git & GitHub assistant built in Rust. Features a rich TUI with
-                        smart staging, guided commits, visual branching, merge conflict resolution, git bisect,
-                        cherry-pick, workflow builder, and an AI mentor for intelligent explanations and
-                        recommendations.
+                        A serverless AI backend on AWS Lambda + API Gateway with a dual-model strategy (Claude 3 Sonnet
+                        for complex reasoning, Claude 3 Haiku for lightweight requests) to cut token cost while
+                        preserving quality. Deployed via AWS SAM/CloudFormation with scoped IAM and 27 pytest cases, plus
+                        a RAG pipeline using FAISS for vector search and DynamoDB as the metadata store.
                     </p>
                     <div class="project-tech">
-                        <span>Rust</span>
-                        <span>TUI</span>
-                        <span>Git</span>
-                        <span>GitHub API</span>
-                        <span>AI Mentor</span>
-                        <span>OAuth</span>
-                    </div>
-                    <div class="project-meta">
-                        <div class="project-language">
-                            <span class="language-dot rust"></span>
-                            Rust
-                        </div>
-                        <div class="project-stars">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                fill="currentColor" stroke="currentColor" stroke-width="2">
-                                <polygon
-                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                            </svg>
-                            1
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Hive - Open Source Contribution -->
-                <article class="project-card glass-card featured">
-                    <span class="featured-badge">🌐 Open Source</span>
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                                <path d="M2 17l10 5 10-5" />
-                                <path d="M2 12l10 5 10-5" />
-                            </svg>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/xpushkal/hive" target="_blank" rel="noopener"
-                                aria-label="GitHub">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path
-                                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                                    <path d="M9 18c-4.51 2-5-2-7-2" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                    <h3 class="project-title">Hive</h3>
-                    <p class="project-description">
-                        Contributed to Hive — an outcome-driven agent development framework that builds autonomous,
-                        self-improving AI agents. Features goal-driven graph generation, adaptive evolution,
-                        human-in-the-loop nodes, browser automation, and real-time observability for production-grade
-                        agents.
-                    </p>
-                    <div class="project-tech">
-                        <span>Python</span>
-                        <span>TypeScript</span>
-                        <span>AI Agents</span>
-                        <span>LLM</span>
-                        <span>Graph Engine</span>
-                        <span>WebSocket</span>
+                        <span>AWS Lambda</span>
+                        <span>API Gateway</span>
+                        <span>Claude 3</span>
+                        <span>FAISS</span>
+                        <span>DynamoDB</span>
+                        <span>AWS SAM</span>
                     </div>
                     <div class="project-meta">
                         <div class="project-language">
@@ -558,7 +624,7 @@
                             </svg>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/xpushkal/nyay-samiti" target="_blank" rel="noopener"
+                            <a href="https://github.com/xpushkal/Nyay-Samiti" target="_blank" rel="noopener"
                                 aria-label="GitHub">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -572,17 +638,19 @@
                     </div>
                     <h3 class="project-title">Nyay Samiti</h3>
                     <p class="project-description">
-                        AI-powered legal document analysis platform using 7 fine-tuned ML models to extract entities,
-                        classify clauses, assess risks, generate summaries, and answer questions. Built end-to-end legal
-                        NLP pipelines using Legal-BERT, LayoutLM, and spaCy.
+                        A legal document intelligence platform built on 7 fine-tuned transformers (LegalBERT, RoBERTa,
+                        BART, T5, Sentence-BERT) over Indian legal corpora — <strong>90.4% F1 (NER)</strong>,
+                        <strong>84.16% accuracy (Risk Scoring)</strong>, and <strong>87.18% Exact Match (Q&amp;A)</strong>.
+                        A FastAPI ML microservice runs a 7-stage inference pipeline (~15s CPU / ~3s GPU), orchestrated as
+                        a 6-service stack with Kafka, Prometheus, and Grafana via Docker Compose.
                     </p>
                     <div class="project-tech">
-                        <span>Legal-BERT</span>
-                        <span>LayoutLM</span>
+                        <span>LegalBERT</span>
+                        <span>PyTorch</span>
                         <span>spaCy</span>
                         <span>FastAPI</span>
-                        <span>Docker</span>
-                        <span>Elasticsearch</span>
+                        <span>Kafka</span>
+                        <span>Grafana</span>
                     </div>
                     <div class="project-meta">
                         <div class="project-language">
@@ -592,19 +660,19 @@
                     </div>
                 </article>
 
-                <article class="project-card glass-card featured">
-                    <span class="featured-badge">🤖 AI Project</span>
+                <article class="project-card glass-card">
                     <div class="project-header">
                         <div class="project-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
-                                <polyline points="4 17 10 11 4 5" />
-                                <line x1="12" x2="20" y1="19" y2="19" />
+                                <path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z" />
+                                <path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1" />
                             </svg>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/xpushkal" target="_blank" rel="noopener" aria-label="GitHub">
+                            <a href="https://github.com/xpushkal/AlignOS" target="_blank" rel="noopener"
+                                aria-label="GitHub">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
@@ -615,18 +683,18 @@
                             </a>
                         </div>
                     </div>
-                    <h3 class="project-title">Agentic AI & RAG Pipeline</h3>
+                    <h3 class="project-title">AlignOS</h3>
                     <p class="project-description">
-                        Built scalable RAG pipeline with n8n, Gemini, and Pinecone for automated ingestion and
-                        retrieval. Implemented low-code AI pipelines integrating LLM agents, memory buffers, and
-                        real-time Q&A systems.
+                        A Slack-native AI agent that turns messy team conversations into structured, evidence-backed
+                        organizational memory. It detects decisions, extracts project context, identifies conflicts, and
+                        answers questions using live Slack evidence — maintaining a verified memory layer for teams.
                     </p>
                     <div class="project-tech">
-                        <span>n8n</span>
-                        <span>Gemini</span>
-                        <span>Pinecone</span>
-                        <span>LangChain</span>
+                        <span>Python</span>
+                        <span>Slack API</span>
+                        <span>LLM Agents</span>
                         <span>RAG</span>
+                        <span>Memory Layer</span>
                     </div>
                     <div class="project-meta">
                         <div class="project-language">
@@ -706,7 +774,7 @@
                             </svg>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/xpushkal/legal-nlp" target="_blank" rel="noopener"
+                            <a href="https://github.com/xpushkal/backtest-dashboard" target="_blank" rel="noopener"
                                 aria-label="GitHub">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -718,21 +786,22 @@
                             </a>
                         </div>
                     </div>
-                    <h3 class="project-title">Legal NLP</h3>
+                    <h3 class="project-title">Backtest Dashboard</h3>
                     <p class="project-description">
-                        Natural Language Processing toolkit for legal documents. Includes text classification, entity
-                        extraction, and document summarization for legal texts.
+                        A high-performance dashboard to backtest trading logic and strategies at scale, built in Rust for
+                        speed and reliability. Run strategy simulations and analyze performance metrics across large
+                        historical datasets.
                     </p>
                     <div class="project-tech">
-                        <span>NLP</span>
-                        <span>Transformers</span>
-                        <span>spaCy</span>
-                        <span>Python</span>
+                        <span>Rust</span>
+                        <span>Backtesting</span>
+                        <span>Quant</span>
+                        <span>Dashboard</span>
                     </div>
                     <div class="project-meta">
                         <div class="project-language">
-                            <span class="language-dot python"></span>
-                            Python
+                            <span class="language-dot rust"></span>
+                            Rust
                         </div>
                         <div class="project-stars">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
@@ -762,27 +831,29 @@
                             </svg>
                         </div>
                         <div class="project-links">
-                            <a href="#" target="_blank" rel="noopener" aria-label="View project">
+                            <a href="https://github.com/xpushkal/CodeGraph" target="_blank" rel="noopener"
+                                aria-label="GitHub">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                                    <polyline points="15 3 21 3 21 9" />
-                                    <line x1="10" x2="21" y1="14" y2="3" />
+                                    <path
+                                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                                    <path d="M9 18c-4.51 2-5-2-7-2" />
                                 </svg>
                             </a>
                         </div>
                     </div>
-                    <h3 class="project-title">AI Cleanup Platform</h3>
+                    <h3 class="project-title">CodeGraph</h3>
                     <p class="project-description">
-                        Applied YOLO object detection model to identify and localize objects in image and video data.
-                        Image preprocessing, evaluation, and performance analysis.
+                        A code intelligence tool that maps a codebase into a navigable graph of files, symbols, and
+                        dependencies — surfacing structure and relationships to make large repositories easier to
+                        understand and reason about.
                     </p>
                     <div class="project-tech">
-                        <span>YOLO</span>
-                        <span>Computer Vision</span>
-                        <span>PyTorch</span>
-                        <span>OpenCV</span>
+                        <span>Python</span>
+                        <span>Static Analysis</span>
+                        <span>Graphs</span>
+                        <span>AST</span>
                     </div>
                     <div class="project-meta">
                         <div class="project-language">
@@ -893,7 +964,7 @@
                     <p class="education-degree">Bachelor of Technology, Computer Science</p>
                     <p class="education-location">Ramapuram, Chennai</p>
                     <div class="education-highlight">
-                        <span class="highlight-badge">CGPA: 8.9</span>
+                        <span class="highlight-badge">CGPA: 9.06 / 10 (Sem 1–6)</span>
                     </div>
                 </div>
                 <div class="education-card glass-card">
@@ -928,22 +999,29 @@
                 <div class="achievement-item glass-card">
                     <div class="achievement-icon">🏆</div>
                     <div class="achievement-content">
-                        <h3>SIH 2025 Finalist</h3>
-                        <p>Smart India Hackathon National Level Finalist</p>
+                        <h3>Smart India Hackathon 2025 — National Finalist</h3>
+                        <p>Among the top teams selected from 50,000+ registrations nationwide.</p>
+                    </div>
+                </div>
+                <div class="achievement-item glass-card">
+                    <div class="achievement-icon">🥉</div>
+                    <div class="achievement-content">
+                        <h3>AI For Bharat 2026 (powered by AWS) — 2nd Runner-Up</h3>
+                        <p>Placed among the top teams out of 96,000+ developers.</p>
                     </div>
                 </div>
                 <div class="achievement-item glass-card">
                     <div class="achievement-icon">🎯</div>
                     <div class="achievement-content">
                         <h3>DEVFEST 2025</h3>
-                        <p>Attended DEVFEST organized by GDG Chennai at IIT Madras Research Park</p>
+                        <p>Attended DEVFEST organized by GDG Chennai at IIT Madras Research Park.</p>
                     </div>
                 </div>
                 <div class="achievement-item glass-card">
                     <div class="achievement-icon">🚀</div>
                     <div class="achievement-content">
-                        <h3>IIM Bangalore</h3>
-                        <p>Attended NSRCELL SummitUp 2024, understanding the technical industry</p>
+                        <h3>IIM Bangalore — NSRCEL SummitUp 2024</h3>
+                        <p>Attended the startup summit to understand the technical and entrepreneurial industry.</p>
                     </div>
                 </div>
             </div>
@@ -1017,7 +1095,7 @@
     <footer class="footer">
         <div class="container">
             <p>Designed & Built by <span class="gradient-text">Pushkal Pratap Singh</span></p>
-            <p class="footer-copyright">© 2024 All rights reserved.</p>
+            <p class="footer-copyright">© 2026 All rights reserved.</p>
         </div>
     </footer>
 
