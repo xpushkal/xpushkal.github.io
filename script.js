@@ -9,16 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavbarScroll();
     initSmoothScroll();
     initGitHubActivity();
-    initScrollProgress();
-    initCursorGlow();
-    initRoleRotator();
-    initStatCounters();
-    initCardTilt();
-    initMagneticButtons();
-    initActiveNavHighlight();
 });
-
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ========================================
    Navigation Toggle (Mobile)
@@ -128,18 +119,11 @@ function initScrollAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // Stagger siblings inside the same parent for a cascade effect
-    const groupCounters = new Map();
     animatedElements.forEach(el => {
-        const parent = el.parentElement;
-        const i = groupCounters.get(parent) || 0;
-        el.style.setProperty('--reveal-i', Math.min(i, 6));
-        groupCounters.set(parent, i + 1);
         observer.observe(el);
     });
 }
@@ -511,170 +495,3 @@ function renderYearSelector(container) {
     }
 }
 
-/* ========================================
-   ✦ Crazy UI interactions
-   ======================================== */
-
-// Scroll progress bar
-function initScrollProgress() {
-    const bar = document.getElementById('scrollProgress');
-    if (!bar) return;
-    const update = () => {
-        const scrollTop = window.scrollY || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - window.innerHeight;
-        const pct = height > 0 ? (scrollTop / height) * 100 : 0;
-        bar.style.width = pct + '%';
-    };
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
-}
-
-// Cursor spotlight that follows the pointer
-function initCursorGlow() {
-    const glow = document.getElementById('cursorGlow');
-    if (!glow || window.matchMedia('(hover: none)').matches) return;
-
-    let raf = null;
-    let tx = 0, ty = 0;
-
-    window.addEventListener('mousemove', (e) => {
-        tx = e.clientX;
-        ty = e.clientY;
-        document.body.classList.add('cursor-active');
-        if (!raf) {
-            raf = requestAnimationFrame(() => {
-                glow.style.transform = `translate(${tx}px, ${ty}px) translate(-50%, -50%)`;
-                raf = null;
-            });
-        }
-    });
-
-    window.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
-}
-
-// Rotating role / typewriter in the hero subtitle
-function initRoleRotator() {
-    const el = document.getElementById('heroRole');
-    if (!el) return;
-
-    const roles = [
-        'AI/ML & Backend Engineer',
-        'LLM Gateway Architect',
-        'RAG Pipeline Builder',
-        'ML Microservices Engineer'
-    ];
-
-    if (prefersReducedMotion) {
-        el.textContent = roles[0];
-        return;
-    }
-
-    let roleIdx = 0;
-    let charIdx = 0;
-    let deleting = false;
-
-    function tick() {
-        const current = roles[roleIdx];
-        if (!deleting) {
-            charIdx++;
-            el.textContent = current.slice(0, charIdx);
-            if (charIdx === current.length) {
-                deleting = true;
-                return setTimeout(tick, 1800);
-            }
-            return setTimeout(tick, 60);
-        } else {
-            charIdx--;
-            el.textContent = current.slice(0, charIdx);
-            if (charIdx === 0) {
-                deleting = false;
-                roleIdx = (roleIdx + 1) % roles.length;
-                return setTimeout(tick, 350);
-            }
-            return setTimeout(tick, 30);
-        }
-    }
-
-    el.textContent = '';
-    setTimeout(tick, 800);
-}
-
-// Animated count-up for the about stats
-function initStatCounters() {
-    const nums = document.querySelectorAll('.stat-number[data-count]');
-    if (!nums.length) return;
-
-    const animate = (el) => {
-        const target = parseFloat(el.dataset.count);
-        const decimals = parseInt(el.dataset.decimals || '0', 10);
-        const suffix = el.dataset.suffix || '';
-        if (prefersReducedMotion) {
-            el.textContent = target.toFixed(decimals) + suffix;
-            return;
-        }
-        const duration = 1400;
-        const start = performance.now();
-        const step = (now) => {
-            const p = Math.min((now - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = (target * eased).toFixed(decimals) + suffix;
-            if (p < 1) requestAnimationFrame(step);
-            else el.textContent = target.toFixed(decimals) + suffix;
-        };
-        requestAnimationFrame(step);
-    };
-
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animate(entry.target);
-                obs.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    nums.forEach(n => obs.observe(n));
-}
-
-// Subtle 3D tilt + cursor sheen on cards
-function initCardTilt() {
-    if (window.matchMedia('(hover: none)').matches || prefersReducedMotion) return;
-    const cards = document.querySelectorAll('.project-card.glass-card, .skill-category.glass-card');
-    const MAX = 6; // degrees
-
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const r = card.getBoundingClientRect();
-            const px = (e.clientX - r.left) / r.width;
-            const py = (e.clientY - r.top) / r.height;
-            const rx = (0.5 - py) * MAX * 2;
-            const ry = (px - 0.5) * MAX * 2;
-            card.classList.add('tilt-active');
-            card.style.transform = `translateY(-6px) perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-            card.style.setProperty('--mx', (px * 100) + '%');
-            card.style.setProperty('--my', (py * 100) + '%');
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
-            card.classList.remove('tilt-active');
-        });
-    });
-}
-
-// Magnetic pull on primary CTA buttons
-function initMagneticButtons() {
-    if (window.matchMedia('(hover: none)').matches || prefersReducedMotion) return;
-    const btns = document.querySelectorAll('.btn, .social-link');
-    btns.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const r = btn.getBoundingClientRect();
-            const x = e.clientX - r.left - r.width / 2;
-            const y = e.clientY - r.top - r.height / 2;
-            btn.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
-        });
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = '';
-        });
-    });
-}
